@@ -1,0 +1,25 @@
+{% load static %}
+<!-- Featured Products -->
+
+<div class="small-container">
+    <h2 class="title">Featured Products</h2>
+    <div class="row">
+        {% for products in featured_products %}
+        <div class="col-4">
+            <a href="{% url "product_detail" products.id %}"><img src="{{products.image.url}}"></a>
+            <h4>{{products.name}}</h4>
+            <p>${{products.price}}</p>
+        </div>
+        {% endfor %}
+    </div>
+    <h2 class="title">Latest Products</h2>
+    <div class="row">
+        {% for products in latest_products %}
+        <div class="col-4">
+            <a href="{% url "product_detail" products.id %}"><img src="{{products.image.url}}"></a>
+            <h4>{{products.name}}</h4>
+            <p>${{products.price}}</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>

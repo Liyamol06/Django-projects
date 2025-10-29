@@ -10,7 +10,7 @@ class Customers(models.Model):
     user=models.OneToOneField(User, related_name='Customer_detail', 
                                 on_delete=models.CASCADE)
     address=models.TextField()
-    phone=models.IntegerField()
+    phone=models.CharField()
     email=models.EmailField(max_length=250)
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now=True)

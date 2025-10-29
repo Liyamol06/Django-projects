@@ -1,0 +1,64 @@
+{% load static %}
+<div class="small-container">
+    <div class="row">
+        <div class="col-2">
+            <img src="{% static 'images/image1.png' %}" width="100%">
+        </div>
+        <div class="col-2">
+            {% if messages %}
+            <div class="message-container">
+                {% for mess in messages %}
+                <div class="alert {{ mess.tags }}">
+                    {{ mess }}
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+            <div class="form-container" style="height: 450px;">
+                <div class="form-btn">
+                    <span onclick="login()">Login</span>
+                    <span onclick="register()">Register</span>
+                    <hr id="Indicator">
+                </div>
+                <form id="LoginForm" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <input type="text" placeholder="Username" required name="name"> 
+                    <input type="password" placeholder="Password" required name="password">
+                    <button type="submit" name="login" class="btn">Login</button>
+                    <a href="">Forget Password</a>
+                </form>
+
+                <form id="RegForm" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <input type="text" placeholder="Username" name="name" required maxlength="10">
+                    <input type="email" placeholder="Email" name="email" required>
+                    <input type="password" placeholder="Password" name="password" required maxlength="13" maxlength="8">
+                    <input type="text" placeholder="Address" name="address">
+                    <input type="text" placeholder="Phone Number" name="phone">
+                    <button type="submit" name="register" class="btn">Register</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+.message-container {
+  margin-bottom: 20px;
+}
+
+.alert {
+  padding: 10px 15px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.alert.success {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.alert.error {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+</style>

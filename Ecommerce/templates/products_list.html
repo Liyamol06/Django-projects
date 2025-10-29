@@ -1,0 +1,52 @@
+{% load static %}
+{% load product_tag %}
+<div class="container">
+        <div class="row row-2">
+            <h2>All Products</h2>
+        </div>
+        
+        {% comment %} {% for product_items in products|product_tag:4 %}
+        <div class="row">
+            {% for product_obj in product_items %}
+            <div class="col-3">
+                <a href="{% url "product_detail" %}">
+                    {% if product_obj.image %}
+                        <img src="{{ product_obj.image.url }}" alt="{{ product_obj.title }}" width="120">
+                    {% else %}
+                        <p>Product Image not available</p>
+                    {% endif %}
+                </a>
+                <h4>{{ product_obj.name }}</h4>
+                <p>{{ product_obj.price }}</p>
+            </div>
+            {% endfor %}
+        </div>
+        {% endfor %} {% endcomment %}
+
+        <div class="row">
+            {% for product_obj in products %}
+            <div class="col-4">
+                <a href="{% url "product_detail" product_obj.id %}">
+                    {% if product_obj.image %}
+                        <img src="{{ product_obj.image.url }}" alt="{{ product_obj.title }}" width="120">
+                    {% else %}
+                        <p>Product Image not available</p>
+                    {% endif %}
+                </a>
+                <h4>{{ product_obj.name }}</h4>
+                <p>{{ product_obj.price }}</p>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="page-btn">
+            {% if products.has_previous %}
+            <a href="?page={{products.previous_page_number}}"><span><<</span></a>
+            {% endif %}
+            {% for product_range in products.paginator.page_range %}
+            <a href="?page={{ product_range }}"><span>{{ product_range }}</span></a>
+            {% endfor %}
+            {% if products.has_next %}
+            <a href="?page={{products.next_page_number}}"><span>>></span></a>
+            {% endif %}
+        </div>
+    </div>
