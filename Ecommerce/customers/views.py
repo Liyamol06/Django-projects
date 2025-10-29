@@ -6,7 +6,9 @@ from .models import Customers
 
 # Create your views here.
 def ShowAccount(request):
+    context={}
     if request.POST and 'register' in request.POST:
+        context['register']=True
         try:
             name=request.POST.get('name')
             email=request.POST.get('email')
@@ -33,6 +35,7 @@ def ShowAccount(request):
             messages.error(request, "Duplicate Username or Invalid Inputs")
 
     if request.POST and 'login' in request.POST:
+        context['register']=False
         name=request.POST.get('name')
         password=request.POST.get('password')
         user=authenticate(username=name, password=password)
