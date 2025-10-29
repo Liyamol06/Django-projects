@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from .models import Customers
 
@@ -14,7 +15,7 @@ def ShowAccount(request):
             password=request.POST.get('password')
 
             # creating user data
-            user=User.objects.create(
+            user=User.objects.create_user(
                 username=name,
                 password=password,
                 email=email
@@ -27,14 +28,17 @@ def ShowAccount(request):
                 email=email,
                 user=user
             )
-            return redirect('home')
+            messages.success(request, "Registration Successful")
         except Exception as e:
-            error_message="Duplicate Username or Invalid Credentials"
-            messages.error(request, error_message)
+            messages.error(request, "Duplicate Username or Invalid Inputs")
 
-    elif request.POST and 'login' in request.POST:
-        
-        print('-------------------------------------------------')
-        print(request.POST)
-        print('-------------------------------------------------')
+    if request.POST and 'login' in request.POST:
+        name=request.POST.get('name')
+        password=request.POST.get('password')
+        user=authenticate(username=name, password=password)
+        if user:
+            login(request, user)
+            return redirect('home')
+        else:
+            messages.error(request, "Invalid Credentials")
     return render(request, 'account.html')
