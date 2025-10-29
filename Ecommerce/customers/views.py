@@ -1,10 +1,14 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from .models import Customers
 
 # Create your views here.
+def LogoutCustomer(request):
+    logout(request)
+    return redirect('account')
+
 def ShowAccount(request):
     context={}
     if request.POST and 'register' in request.POST:
